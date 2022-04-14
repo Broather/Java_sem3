@@ -1,0 +1,14 @@
+<html xmlns:th = "http://www.thymeleaf.org">
+	<body>
+		<p>Sveiciens object-page</p>
+		<p>Informācija par produktu -></p>
+		<table>
+		 <tr th:each="prod : ${package}">
+        <td th:text="${prod.getTitle()}"></td>
+        <td th:text="${prod.getPrice()}"></td>
+        <td th:text="${prod.getAmount()}"></td>
+		</table>
+		
+      </tr>
+	</body>
+</html>
