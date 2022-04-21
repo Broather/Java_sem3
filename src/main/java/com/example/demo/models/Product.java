@@ -1,11 +1,18 @@
 package com.example.demo.models;
 
 public class Product {
-
+private static int idCounter = 0;
+private int id;
 private String title;
 private float price;
 private int amount;
 
+private void setId() {
+	id = idCounter;
+}
+public int getId() {
+	return id;
+}
 public String getTitle() {
 	return title;
 }
@@ -28,6 +35,7 @@ public void setAmount(int amount) {
 public Product() {}
 
 public Product(String title, float price, int amount) {
+	setId();
 	setTitle(title);
 	setPrice(price);
 	setAmount(amount);

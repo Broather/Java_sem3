@@ -25,19 +25,22 @@ public class CRUDProductServiceImpl implements ICRUDProductService{
 			}
 		}
 		Product newProduct = new Product(temp.getTitle(), temp.getPrice(), temp.getAmount());
-		return null;
+		return newProduct;
 	}
 
 	@Override
 	public ArrayList<Product> readAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return allProducts;
 	}
 
 	@Override
 	public Product readById(int id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		for(Product prod: allProducts) {
+			if(prod.getId() == id) {
+				return prod;
+			}
+		}
+		throw new Exception("Produkts ar id:" +id+ " neeksistē");
 	}
 
 	@Override
