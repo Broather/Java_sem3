@@ -45,8 +45,10 @@ public class CRUDProductServiceImpl implements ICRUDProductService{
 
 	@Override
 	public void updateById(int id, Product temp) throws Exception {
+		boolean isFound = false;
 		for(Product prod: allProducts) {
 			if(prod.getId() == id) {
+				isFound = true;
 				if(temp.getTitle() != null){
 					prod.setTitle(prod.getTitle());
 				}
@@ -58,7 +60,7 @@ public class CRUDProductServiceImpl implements ICRUDProductService{
 				}
 			}
 		}
-		throw new Exception("Produkts ar id:" +id+ " neeksistē");
+		if(!isFound) throw new Exception("Produkts ar id:" +id+ " neeksistē");
 		
 	}
 
