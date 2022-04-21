@@ -25,6 +25,7 @@ public class CRUDProductServiceImpl implements ICRUDProductService{
 			}
 		}
 		Product newProduct = new Product(temp.getTitle(), temp.getPrice(), temp.getAmount());
+		allProducts.add(newProduct);
 		return newProduct;
 	}
 
