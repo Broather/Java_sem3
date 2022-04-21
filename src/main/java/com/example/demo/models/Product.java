@@ -8,7 +8,7 @@ private float price;
 private int amount;
 
 private void setId() {
-	id = idCounter;
+	id = idCounter++;
 }
 public int getId() {
 	return id;

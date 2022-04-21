@@ -40,7 +40,7 @@ public class CRUDProductServiceImpl implements ICRUDProductService{
 				return prod;
 			}
 		}
-		throw new Exception("Produkts ar id:" +id+ " neeksistē");
+		throw new Exception("Produkts ar id: " +id+ " neeksistē");
 	}
 
 	@Override
@@ -60,18 +60,21 @@ public class CRUDProductServiceImpl implements ICRUDProductService{
 				}
 			}
 		}
-		if(!isFound) throw new Exception("Produkts ar id:" +id+ " neeksistē");
+		if(!isFound) throw new Exception("Produkts ar id: " +id+ " neeksistē");
 		
 	}
 
 	@Override
 	public void deleteById(int id) throws Exception {
+		boolean isFound = false;
 		for(Product prod: allProducts) {
 			if(prod.getId() == id) {
+				isFound = true;
 				allProducts.remove(prod);
 			}
 		}
-		throw new Exception("Produkts ar id:" +id+ " neeksistē");
+		if(!isFound) throw new Exception("Produkts ar id:" +id+ " neeksistē");
+
 		
 	}
 
