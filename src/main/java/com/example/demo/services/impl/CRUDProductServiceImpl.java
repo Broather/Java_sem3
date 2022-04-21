@@ -45,13 +45,31 @@ public class CRUDProductServiceImpl implements ICRUDProductService{
 
 	@Override
 	public void updateById(int id, Product temp) throws Exception {
-		// TODO Auto-generated method stub
+		for(Product prod: allProducts) {
+			if(prod.getId() == id) {
+				if(temp.getTitle() != null){
+					prod.setTitle(prod.getTitle());
+				}
+				if(temp.getPrice() != 0){
+					prod.setAmount(prod.getAmount());
+				}
+				if(temp.getAmount() != 0){
+					prod.setAmount(prod.getAmount());
+				}
+			}
+		}
+		throw new Exception("Produkts ar id:" +id+ " neeksistē");
 		
 	}
 
 	@Override
 	public void deleteById(int id) throws Exception {
-		// TODO Auto-generated method stub
+		for(Product prod: allProducts) {
+			if(prod.getId() == id) {
+				allProducts.remove(prod);
+			}
+		}
+		throw new Exception("Produkts ar id:" +id+ " neeksistē");
 		
 	}
 
