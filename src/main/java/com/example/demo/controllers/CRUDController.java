@@ -3,9 +3,12 @@ package com.example.demo.controllers;
 
 import java.util.ArrayList;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -64,10 +67,17 @@ public class CRUDController{
 		return "add-prod-page";
 	}
 	@PostMapping("/add")  //localhost:8080/product/add
-	public String postProductAdd(Product product) { // saņem aizpildīt produktu no html lapas
-		Product prod = prodService.createProduct(product);
-//		return "redirect:/product/one";
-		return "redirect:/product/one/"+prod.getId();
+	public String postProductAdd(@Valid Product product, BindingResult result) { // saņem aizpildīt produktu no html lapas
+//		ja validācijai nav kļūdas
+		if(!result.hasErrors()) {
+			Product prod = prodService.createProduct(product);
+//			return "redirect:/product/one";
+			return "redirect:/product/one/"+prod.getId();
+		}else {
+			return "add-prod-page";
+		}
+		
+		
 	}
 	
 	@GetMapping("/update/{id}")
@@ -84,7 +94,10 @@ public class CRUDController{
 		
 	}
 	@PostMapping("/update/{id}")
-	public String postProductUpdate(@PathVariable(name= "id") int id, Product product, Model model) {
+	public String postProductUpdate(@PathVariable(name= "id") int id,@Valid Product product, BindingResult result, Model model) {
+		if(!result.hasErrors()) {
+			
+		
 		try {
 			prodService.updateById(id, product);
 		} catch (Exception e) {
@@ -92,12 +105,16 @@ public class CRUDController{
 			return "error-page";
 		}
 		return "redirect:/product/one/"+id;
+		}else {
+			return "update-prod-page";
+		}
 	}
 	@GetMapping("/delete/{id}")
 	public String getProductDelete(@PathVariable(name = "id") int id, Model model) {
 		try {
 			prodService.deleteById(id);
 		} catch (Exception e) {
+			e.printStackTrace();
 			model.addAttribute("errorMessage", e.getMessage());
 			return "error-page";
 		}

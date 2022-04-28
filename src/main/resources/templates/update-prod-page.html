@@ -5,10 +5,26 @@
 		<p th:text="${product.getTitle()}"></p>
 		<p th:text="${product.getPrice()}"></p>
 		<p th:text="${product.getAmount()}"></p>
-		<form action="#" th:action="@{/product/update/__${id}__}" th:object="${product}" method="post">
-			<input type="text" th:field="*{title}">
-			<input type="text" th:field="*{price}">
-			<input type="text" th:field="*{amount}">
+			<form action="#" th:action="@{/product/update/__${id}__}" th:object="${product}" method="post">
+				<table>
+				<tr>
+					<td>Ievadīt nosaukumu!</td>
+					<td><input type="text" th:field="*{title}"></td>
+					<td  th:if="${#fields.hasErrors('title')}" th:errors="*{title}"> </td>
+				</tr>
+				<tr>
+					<td>Ievadīt cenu!</td>
+					<td><input type="text" th:field="*{price}"></td>
+					<td th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></td>
+		
+				</tr>
+				<tr>
+					<td>Ievadīt skaitu!</td>
+					<td><input type="text" th:field="*{amount}"></td>
+					<td th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></td>
+		
+				</tr>
+			</table>
 			<button type="submit">Saglabāt produktu</button>
 		</form>
 	</body>

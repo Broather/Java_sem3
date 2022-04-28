@@ -72,6 +72,7 @@ public class CRUDProductServiceImpl implements ICRUDProductService{
 			if(prod.getId() == id) {
 				isFound = true;
 				allProducts.remove(prod);
+				break;
 			}
 		}
 		if(!isFound) throw new Exception("Produkts ar id:" +id+ " neeksistē");
