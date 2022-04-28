@@ -3,17 +3,18 @@ package com.example.demo.services.impl;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.models.Product;
+import com.example.demo.repo.IProductRepo;
 import com.example.demo.services.ICRUDProductService;
 
 @Service
 public class CRUDProductServiceImpl implements ICRUDProductService{
-	private ArrayList<Product> allProducts = new ArrayList<>(
-			Arrays.asList(	new Product("Maize", 1.45f, 20),
-							new Product("Piens", 2.30f, 100),
-							new Product("Cepumi", 0.35f, 1000)));
+	@Autowired
+	private IProductRepo prodRepo;
+	
 	@Override
 	public Product createProduct(Product temp) {
 //		ja jau eksistē produkts ar tādu pašu nosaukumu un cenu, tad update amount
@@ -31,17 +32,17 @@ public class CRUDProductServiceImpl implements ICRUDProductService{
 
 	@Override
 	public ArrayList<Product> readAll() {
-		return allProducts;
+		return (ArrayList<Product>) prodRepo.findAll();
 	}
 
 	@Override
 	public Product readById(int id) throws Exception {
-		for(Product prod: allProducts) {
-			if(prod.getId() == id) {
-				return prod;
-			}
+		if(prodRepo.existsById(id)) {
+			return prodRepo.findById(id).get();
+		}else {
+			throw new Exception("Produkts ar id: " +id+ " neeksistē");			
 		}
-		throw new Exception("Produkts ar id: " +id+ " neeksistē");
+
 	}
 
 	@Override
@@ -67,15 +68,11 @@ public class CRUDProductServiceImpl implements ICRUDProductService{
 
 	@Override
 	public void deleteById(int id) throws Exception {
-		boolean isFound = false;
-		for(Product prod: allProducts) {
-			if(prod.getId() == id) {
-				isFound = true;
-				allProducts.remove(prod);
-				break;
-			}
+		if(prodRepo.existsById(id)) {
+			prodRepo.deleteById(id);
+		}else {
+			throw new Exception("Produkts ar id: " +id+ " neeksistē");			
 		}
-		if(!isFound) throw new Exception("Produkts ar id:" +id+ " neeksistē");
 
 		
 	}
