@@ -44,7 +44,7 @@ public class CRUDController{
 		
 		return "object-page";
 	}
-	@GetMapping("/one/{id}") //localhost:8080/all/<vērtība>
+	@GetMapping("/one/{id}") //localhost:8080/one/<vērtība>
 	public String getProductById(@PathVariable(name = "id") int id, Model model) {
 		Product tempProd;
 		try {
@@ -66,8 +66,8 @@ public class CRUDController{
 	@PostMapping("/add")  //localhost:8080/product/add
 	public String postProductAdd(Product product) { // saņem aizpildīt produktu no html lapas
 		Product prod = prodService.createProduct(product);
-//		return "redired:/product/all";
-		return "redirect:/product/all/"+prod.getId();
+//		return "redirect:/product/one";
+		return "redirect:/product/one/"+prod.getId();
 	}
 	
 	@GetMapping("/update/{id}")
@@ -92,5 +92,16 @@ public class CRUDController{
 			return "error-page";
 		}
 		return "redirect:/product/one/"+id;
+	}
+	@GetMapping("/delete/{id}")
+	public String getProductDelete(@PathVariable(name = "id") int id, Model model) {
+		try {
+			prodService.deleteById(id);
+		} catch (Exception e) {
+			model.addAttribute("errorMessage", e.getMessage());
+			return "error-page";
+		}
+		model.addAttribute("package", prodService.readAll());
+		return "list-page";
 	}
 }

@@ -51,13 +51,13 @@ public class CRUDProductServiceImpl implements ICRUDProductService{
 			if(prod.getId() == id) {
 				isFound = true;
 				if(temp.getTitle() != null){
-					prod.setTitle(prod.getTitle());
+					prod.setTitle(temp.getTitle());
 				}
 				if(temp.getPrice() != 0){
-					prod.setAmount(prod.getAmount());
+					prod.setPrice(temp.getPrice());
 				}
 				if(temp.getAmount() != 0){
-					prod.setAmount(prod.getAmount());
+					prod.setAmount(temp.getAmount());
 				}
 			}
 		}
